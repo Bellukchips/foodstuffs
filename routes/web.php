@@ -76,4 +76,6 @@ Route::middleware('checkRoles:USER')->group(function () {
 
     //route update account
     Route::post('/foodstuffs/dashboard/account', [DashboardUser::class, 'updateAccount'])->name('updateAccount');
+    // save store settings
+    Route::post('/foodstuffs/dashboard/settings',[DashboardUser::class,'saveStoreSettings'])->name('saveStoreSettings');
 });

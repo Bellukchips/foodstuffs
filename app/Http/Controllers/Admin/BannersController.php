@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BannersController extends Controller
 {
@@ -126,6 +127,8 @@ class BannersController extends Controller
         try {
             // save data to table
             $banners = Banner::find($id);
+            // remove image from storage laravel
+            Storage::delete(public_path($banners->img_banner));
             $banners->delete();
             return redirect()->route('banners.index');
         } catch (\Exception $error) {

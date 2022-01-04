@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Categorie;
 use App\Models\FoodStuffs;
+use App\Models\Partner;
 use Illuminate\Http\Request;
 
 class FoodStuffsController extends Controller
@@ -23,10 +25,12 @@ class FoodStuffsController extends Controller
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
-     */
+     */ 
     public function create()
     {
-        //
+        $categorie = Categorie::all();
+        $partner = Partner::all();
+        return view('admin.manage_product.create',compact('categorie','partner'));
     }
 
     /**

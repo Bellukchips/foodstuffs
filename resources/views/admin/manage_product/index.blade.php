@@ -2,14 +2,14 @@
 @section('content')
     <div class="container-fluid">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Search Categories</h1>
+            <h1 class="h3 mb-0 text-gray-800">Search Foodstuffs</h1>
         </div>
         <form class="form-inline" action="" method="GET">
             <div class="form-group mb-2">
-                <input type="text" name="search" class="form-control ml-2" placeholder="Categorie Name">
+                <input type="text" name="search" class="form-control ml-2" placeholder="Foodstuffs Name">
             </div>
             <button type="submit" class="btn btn-primary mb-2 ml-2"><i class="fa fa-search"></i> Find</button>
-            <a href="{{ route('categories.create') }}" class="btn btn-outline-primary mb-2 ml-2"><i
+            <a href="{{ route('foodstuffs.create') }}" class="btn btn-outline-primary mb-2 ml-2"><i
                     class="fa fa-plus"></i> Add new data</a>
         </form>
         <table class="table table-bordered">

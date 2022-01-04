@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Categorie;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 use function PHPUnit\Framework\isEmpty;
 
@@ -46,7 +47,7 @@ class CategoriesController extends Controller
         try {
             // save data to table
             if ($request->file('image_categories')) {
-                $file = $request->file('image_categories')->store('assets/food', 'public');
+                $file = $request->file('image_categories')->store('assets/categorie', 'public');
                 $data['image_categories'] = $file;
             }
             Categorie::create($data);
@@ -95,7 +96,7 @@ class CategoriesController extends Controller
         try {
             // save data to table
             if ($request->file('image_categories')) {
-                $file = $request->file('image_categories')->store('assets/food', 'public');
+                $file = $request->file('image_categories')->store('assets/categorie', 'public');
                 $request->image_categories = $file;
             }
             /**
@@ -127,7 +128,10 @@ class CategoriesController extends Controller
     {
         try {
             // save data to table
+
             $categories = Categorie::find($id);
+            // remove image from storage laravel
+            Storage::delete(public_path($categories->image_categories));
             $categories->delete();
             return redirect()->route('categories.index');
         } catch (\Exception $error) {

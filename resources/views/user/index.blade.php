@@ -60,42 +60,25 @@
               col-6 = ukuran paling kecil
               col-3 = sedang
               col-2 = gede -->
-                    <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="200">
-                        <a href="#" class="component-categories d-block">
-                            <div class="categories-image">
-                                <img src="{{ asset('food/images/categories-vegetarian.png') }}"
-                                    alt="categories-vegetarian" class="w-100" />
-                                <p class="categories-text">Vegetarian</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="300">
-                        <a href="#" class="component-categories d-block">
-                            <div class="categories-image">
-                                <img src="{{ asset('food/images/categories-fruits.png') }}" alt="categories-fruits"
-                                    class="w-100" />
-                                <p class="categories-text">Fruits</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="400">
-                        <a href="#" class="component-categories d-block">
-                            <div class="categories-image">
-                                <img src="{{ asset('food/images/categories-milk-box.png') }}" alt="categories-milk"
-                                    class="w-100" />
-                                <p class="categories-text">Milk</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-6 col-mb-4 col-lg-3" data-aos="fade-up" data-aos-delay="400">
-                        <a href="#" class="component-categories d-block">
-                            <div class="categories-image">
-                                <img src="{{ asset('food/images/categories-beef.png') }}" alt="categories-beef"
-                                    class="w-100" />
-                                <p class="categories-text">Meat</p>
-                            </div>
-                        </a>
-                    </div>
+                    @forelse ($categorie as $item )
+                        <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+                            <a href="#" class="component-categories d-block">
+                                <div class="categories-image">
+                                    <img src="{{ url('storage/' . $item->image_categories) }}"
+                                        alt="categories-vegetarian" class="w-100" />
+                                    <p class="categories-text">{{ $item->title }}</p>
+                                </div>
+                            </a>
+                        </div>
+                    @empty
+                        <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+                            <a href="#" class="component-categories d-block">
+                                <div class="categories-image">
+                                    <p class="categories-text">No Category</p>
+                                </div>
+                            </a>
+                        </div>
+                    @endforelse
                 </div>
             </div>
         </section>

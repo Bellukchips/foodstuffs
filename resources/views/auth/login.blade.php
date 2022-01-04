@@ -21,7 +21,7 @@
       "
         data-aos="fade-down">
         <div class="container">
-            <a href="/index.html" class="navbar-brand">
+            <a href="#" class="navbar-brand">
                 <img src="{{ asset('food/images/logo.svg') }}" alt="Logo" />
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">

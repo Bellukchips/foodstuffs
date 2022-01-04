@@ -4,7 +4,10 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
+use App\Models\Categorie;
+use App\Models\Partner;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -14,7 +17,8 @@ class UserController extends Controller
     public function index()
     {
         $banner = Banner::all();
-        return view('user.index',compact('banner'));
+        $categorie = Categorie::all();
+        return view('user.index',compact('banner','categorie'));
     }
 
     /**
@@ -43,7 +47,17 @@ class UserController extends Controller
      */
     public function goToStoreSettings()
     {
-        return view('user.dashboard.store.index');
+        /**
+         * get single data partner where id_user == id user sign in
+         */
+        $partner = Partner::where('id_user',Auth::user()->id)->first();
+        /**
+         * get data partenr where id_user == id_user signin
+         */
+        $checkPartner =  Partner::where('id_user',Auth::user()->id)->get();
+        // get data categorie
+        $categorie = Categorie::all();
+        return view('user.dashboard.store.index',compact('partner','checkPartner','categorie'));
     }
     /**
      * go to account page
