@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use App\Models\Categorie;
 use App\Models\FoodStuffs;
 use App\Models\Partner;
@@ -20,10 +21,13 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $user = User::where('id', Auth::user()->id)->first();
-        $partner = Partner::where('id_user', $user->id)->firstOrFail();
-        $foodstuffs = FoodStuffs::with(['categorie'])->where('id_partner', $partner->id)->paginate(10);
-        return view('user.dashboard.product.index', compact('foodstuffs'));
+        $checkPartner =  Partner::where('id_user', Auth::user()->id)->get();
+        if (count($checkPartner) > 0) {
+            $partner = Partner::where('id_user', Auth::user()->id)->firstOrFail();
+            $foodstuffs = FoodStuffs::with(['categorie'])->where('id_partner', $partner->id)->paginate(10);
+            return view('user.dashboard.product.index', compact('checkPartner', 'foodstuffs'));
+        }
+        return view('user.dashboard.product.index', compact('checkPartner'));
     }
 
     /**
@@ -53,26 +57,37 @@ class ProductController extends Controller
             'thumbnail' => 'required|image|max:2048'
         ]);
         try {
-            if ($request->file('thumbnail')) {
-                $file = $request->file('thumbnail')->store('assets/product', 'public');
-                $request->thumbnail = $file;
-            }
+
             $user = User::where('id', Auth::user()->id)->first();
-            $checkPartner = Partner::where('id_user', $user->id)->get();
-            $partner = Partner::where('id_user', $user->id)->firstOrFail();
+            /**
+             * check completed data account
+             */
             if ($user->address == null || $user->phone == null || $user->zip_code == null | $user->province == null || $user->country == null || $user->city == null) {
                 return back()->with('failedRequest', 'Please complete your personal data');
-            } else if (count($checkPartner) > 0) {
-
-                FoodStuffs::create([
-                    'name' => $request->name,
-                    'price' => $request->price,
-                    'desc' => $request->desc,
-                    'id_categorie' => $request->id_categorie,
-                    'id_partner' => $partner->id,
-                    'thumbnail' => $request->thumbnail
-                ]);
-                return redirect()->route('product.index')->with('success', 'Success save new product');
+            } else {
+                /**
+                 * check if user is not register as partner
+                 * then can't to selling product
+                 */
+                $checkPartner = Partner::where('id_user', Auth::user()->id)->get();
+                if (count($checkPartner) == 0) {
+                    return back()->with('failedRequest', 'Open your store first, if you want to selling your product');
+                } else {
+                    $partner = Partner::where('id_user', Auth::user()->id)->firstOrFail();
+                    if ($request->file('thumbnail')) {
+                        $file = $request->file('thumbnail')->store('assets/product', 'public');
+                        $request->thumbnail = $file;
+                    }
+                    FoodStuffs::create([
+                        'name' => $request->name,
+                        'price' => $request->price,
+                        'desc' => $request->desc,
+                        'id_categorie' => $request->id_categorie,
+                        'id_partner' => $partner->id,
+                        'thumbnail' => $request->thumbnail
+                    ]);
+                    return redirect()->route('product.index')->with('success', 'Success save new product');
+                }
             }
 
             //code...
@@ -89,7 +104,6 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
@@ -167,9 +181,36 @@ class ProductController extends Controller
             // remove image from storage laravel
             Storage::delete(public_path($foodstuffs->img_banner));
             $foodstuffs->delete();
-            return redirect()->route('product.index')->with('success','Success delete product');
+            return redirect()->route('product.index')->with('success', 'Success delete product');
         } catch (\Exception $error) {
             return back()->with('requestFailed', $error);
         }
+    }
+    /**
+     * add to cart
+     */
+    public function addToCart($idProduct)
+    {
+        try {
+            $foodstuffs = FoodStuffs::where('id', $idProduct)->firstOrFail();
+
+            Cart::create([
+                'id_foodstuffs' => $idProduct,
+                'id_user' => Auth::user()->id,
+                'quantity' => 1,
+                'total' => $foodstuffs->price
+            ]);
+            return back()->with('success', 'Success add to cart');
+        } catch (\Exception $error) {
+            return back()->with('failedRequest', $error);
+        }
+    }
+    /**
+     * detail product
+     */
+    public function detail($id)
+    {
+        $foodstuffs = FoodStuffs::with(['partner'])->findorFail($id);
+        return view('user.product.detail.detail', compact('foodstuffs'));
     }
 }

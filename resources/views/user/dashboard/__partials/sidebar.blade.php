@@ -1,9 +1,25 @@
  <!-- Sidebar -->
  <div class="border-right" id="sidebar-wrapper">
      <div class="sidebar-heading text-center">
-         <img src="{{ asset('food/images/dashboard-store-logo.svg') }}" alt="dashboard-logo" class="my-4" />
+
+         <img src="           @if (Auth::user()->profile_photo_path==null)
+         {{ asset('food/images/icons-testimonial-2.png') }}
+     @else
+         {{ url('storage/' . Auth::user()->profile_photo_path) }}
+         @endif" alt="" class="rounded-circle mr-2 profile-picture" width="120" height="120" data-holder-rendered="true"
+         />
      </div>
+     <div class="text-center">
+         @php
+             $fullName = Auth::user()->name;
+             $firstName = strtok($fullName, ' ');
+         @endphp
+         {{ 'Hi, ' . $firstName }}
+     </div>
+     <br>
      <div class="list-group list-group-flush">
+         <a href="{{ route('dashboardUser') }}" class="list-group-item list-group-item-action">
+             Home</a>
          @if (Route::is('goToDashboard'))
              <a href="{{ route('goToDashboard') }}" class="list-group-item list-group-item-action active">
                  Dashboard</a>
@@ -39,5 +55,11 @@
              <a href="{{ route('goToAccount') }}" class="list-group-item list-group-item-action">
                  My Account</a>
          @endif
+         <form action="{{ route('logout') }}" method="POST">
+             @csrf
+             <button type="submit" class="list-group-item list-group-item-action">Sign Out</button>
+         </form>
+
+
      </div>
  </div>

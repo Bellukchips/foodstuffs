@@ -1,4 +1,7 @@
 @extends('user.dashboard.dashboard')
+@section('navbar')
+    @include('user.dashboard.__partials.nav_bar')
+@endsection
 @section('content')
     <div class="container-fluid">
         <div class="dashboard-heading">
@@ -11,7 +14,7 @@
                     <div class="card mb-2">
                         <div class="card-body">
                             <div class="dashboard-card-title">Customer</div>
-                            <div class="dashboard-card-subtitle">15,209</div>
+                            <div class="dashboard-card-subtitle">0</div>
                         </div>
                     </div>
                 </div>
@@ -19,7 +22,7 @@
                     <div class="card mb-2">
                         <div class="card-body">
                             <div class="dashboard-card-title">Revenue</div>
-                            <div class="dashboard-card-subtitle">$931,290</div>
+                            <div class="dashboard-card-subtitle">Rp0</div>
                         </div>
                     </div>
                 </div>
@@ -27,7 +30,7 @@
                     <div class="card mb-2">
                         <div class="card-body">
                             <div class="dashboard-card-title">Transactions</div>
-                            <div class="dashboard-card-subtitle">22,409,399</div>
+                            <div class="dashboard-card-subtitle">0</div>
                         </div>
                     </div>
                 </div>

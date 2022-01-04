@@ -4,8 +4,11 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
+use App\Models\Cart;
 use App\Models\Categorie;
+use App\Models\FoodStuffs;
 use App\Models\Partner;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,7 +21,14 @@ class UserController extends Controller
     {
         $banner = Banner::all();
         $categorie = Categorie::all();
-        return view('user.index',compact('banner','categorie'));
+        $checkPartner =  Partner::where('id_user', Auth::user()->id)->get();
+        if (count($checkPartner) > 0) {
+            $partner = Partner::where('id_user', Auth::user()->id)->firstOrFail();
+            $product = FoodStuffs::where('id_partner', '!=', $partner->id)->latest()->get();
+            return view('user.index', compact('banner', 'categorie', 'product'));
+        }
+        $product = FoodStuffs::latest()->get();
+        return view('user.index', compact('banner', 'categorie', 'product'));
     }
 
     /**
@@ -26,7 +36,8 @@ class UserController extends Controller
      */
     public function goToDashboard()
     {
-        return view('user.dashboard.index');
+        $cart = Cart::where('id_user', Auth::user()->id)->count();
+        return view('user.dashboard.index', compact('cart'));
     }
     /**
      * go to transaction dashboard
@@ -43,14 +54,14 @@ class UserController extends Controller
         /**
          * get single data partner where id_user == id user sign in
          */
-        $partner = Partner::where('id_user',Auth::user()->id)->first();
+        $partner = Partner::where('id_user', Auth::user()->id)->first();
         /**
          * get data partenr where id_user == id_user signin
          */
-        $checkPartner =  Partner::where('id_user',Auth::user()->id)->get();
+        $checkPartner =  Partner::where('id_user', Auth::user()->id)->get();
         // get data categorie
         $categorie = Categorie::all();
-        return view('user.dashboard.store.index',compact('partner','checkPartner','categorie'));
+        return view('user.dashboard.store.index', compact('partner', 'checkPartner', 'categorie'));
     }
     /**
      * go to account page

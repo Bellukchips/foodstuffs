@@ -1,10 +1,11 @@
 <li class="nav-item dropdown">
     <a href="#" class="nav-link" id="navbarDropdown" data-toggle="dropdown">
-        <img src="  @if (Auth::user()->profile_photo_path==null)
+        <img src="   @if (Auth::user()->profile_photo_path==null)
         {{ asset('food/images/icons-testimonial-2.png') }}
     @else
         {{ url('storage/' . Auth::user()->profile_photo_path) }}
-        @endif" alt="" class="rounded-circle mr-2 profile-picture" />
+        @endif" alt="" class="rounded-circle mr-2 profile-picture" width="40" height="40" data-holder-rendered="true"
+        />
         @php
             $fullName = Auth::user()->name;
             $firstName = strtok($fullName, ' ');

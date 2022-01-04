@@ -34,15 +34,33 @@ class DashboardUser extends Controller
              * update data user account based on id
              */
             $user = User::findOrFail(Auth::user()->id);
-            $user->name = $request->name;
-            $user->province = $request->province;
-            $user->city = $request->city;
-            $user->zip_code = $request->zip_code;
-            $user->country = $request->country;
-            $user->phone = $request->phone;
-            $user->gender = $request->gender;
-            $user->address = $request->address;
-            $user->update();
+            if ($request->file('photo_profile')) {
+                $file = $request->file('photo_profile')->store('assets/profile', 'public');
+                $request->photo_profile = $file;
+            }
+            if ($request->photo_profile == null) {
+                $user->name = $request->name;
+                $user->province = $request->province;
+                $user->city = $request->city;
+                $user->zip_code = $request->zip_code;
+                $user->country = $request->country;
+                $user->phone = $request->phone;
+                $user->gender = $request->gender;
+                $user->address = $request->address;
+                $user->update();
+            } else {
+                $user->name = $request->name;
+                $user->province = $request->province;
+                $user->city = $request->city;
+                $user->zip_code = $request->zip_code;
+                $user->country = $request->country;
+                $user->phone = $request->phone;
+                $user->gender = $request->gender;
+                $user->address = $request->address;
+                $user->profile_photo_path = $request->photo_profile;
+                $user->update();
+            }
+
 
             return redirect()->route('goToAccount')->with('success', 'Success update account');
         } catch (\Exception $error) {

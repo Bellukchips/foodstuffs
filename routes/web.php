@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\FoodStuffsController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\DashboardUser;
 use App\Http\Controllers\User\ProductController;
 use App\Http\Controllers\User\UserController;
@@ -46,9 +47,9 @@ Route::middleware('checkRoles:ADMIN')->group(function () {
     // route categorie
     Route::resource('/admin/categories', CategoriesController::class);
     //route('banner')
-    Route::resource('/admin/banners',BannersController::class);
+    Route::resource('/admin/banners', BannersController::class);
     //route product
-    Route::resource('/admin/foodstuffs',FoodStuffsController::class);
+    Route::resource('/admin/foodstuffs', FoodStuffsController::class);
 });
 
 /**
@@ -72,7 +73,11 @@ Route::middleware('checkRoles:USER')->group(function () {
     //route update account
     Route::post('/foodstuffs/dashboard/account', [DashboardUser::class, 'updateAccount'])->name('updateAccount');
     // save store settings
-    Route::post('/foodstuffs/dashboard/settings',[DashboardUser::class,'saveStoreSettings'])->name('saveStoreSettings');
+    Route::post('/foodstuffs/dashboard/settings', [DashboardUser::class, 'saveStoreSettings'])->name('saveStoreSettings');
     //  product
-    Route::resource('/foodstuffs/dashboard/product',ProductController::class);
+    Route::resource('/foodstuffs/dashboard/product', ProductController::class);
+    // cart
+    Route::post('/foodstuffs/product/detail/{id}', [ProductController::class, 'addToCart'])->name('addToCart');
+    Route::get('/foodstuffs/product/detail/{id}', [ProductController::class, 'detail'])->name('detailProduct');
+    Route::resource('/foodstuffs/cart', CartController::class);
 });

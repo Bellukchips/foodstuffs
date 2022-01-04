@@ -4,7 +4,7 @@ fixed-top
 navbar-fixed-top
 " data-aos="fade-down">
     <div class="container">
-        <a href="" class="navbar-brand">
+        <a href="{{ route('dashboardUser') }}" class="navbar-brand">
             <img src="{{ asset('food/images/logo.svg') }}" alt="Logo" />
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
@@ -31,11 +31,11 @@ navbar-fixed-top
             </ul>
             <ul class="navbar-nav d-none d-lg-flex">
                 @include('user.__partials.navbar_profile')
-                <li class="nav-item">
-                    <a href="" class="nav-link d-inline-block mt-2">
+                {{-- <li class="nav-item">
+                    <a href="{{ route('cart.index') }}" class="nav-link d-inline-block mt-2">
                         <img src="{{ asset('food/images/icon-cart-empty.svg') }}" alt="" />
                     </a>
-                </li>
+                </li> --}}
             </ul>
         </div>
     </div>

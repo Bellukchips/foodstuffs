@@ -31,7 +31,7 @@
         <div class="dashboard-content">
             <div class="row">
                 <div class="col-12">
-                    <form action="{{ route('updateAccount') }}" method="POST">
+                    <form action="{{ route('updateAccount') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="card">
                             <div class="card-body">
@@ -104,6 +104,12 @@
                                                 @endif />
                                                 <label class="form-check-label" for="inlineRadio1">Male</label>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="">Photo</label>
+                                            <input type="file" name="photo_profile" class="form-control" id="">
                                         </div>
                                     </div>
                                     <div class="col-md-12">

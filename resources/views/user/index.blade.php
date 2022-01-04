@@ -1,15 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <title>Foodstuffs Store - Your Best Marketplace</title>
-    @include('user.__partials.head')
-</head>
-
-<body>
-    @include('user.__partials.nav')
-    <!-- page content -->
-    <div class="page-content page-home">
+@extends('user.home')
+<div class="page-content page-home">
+    @section('section1')
         <!-- Page Categories -->
         <section class="store-carousel">
             <div class="container">
@@ -19,8 +10,8 @@
                             <ol class="carousel-indicators">
                                 @forelse ($banner as $index => $data )
                                     <li class="@if ($index == 0)
-                                    active
-                                @endif"
+                                active
+                            @endif"
                                         data-target="#storeCarousel" data-slide-to="{{ $index }}"></li>
                                 @empty
                                     <div></div>
@@ -31,8 +22,8 @@
                                 @forelse ($banner as $index => $data )
                                     <div
                                         class="carousel-item @if ($index == 0)
-                                        active
-                                    @endif">
+                                    active
+                                @endif">
                                         <img src="{{ url('storage/' . $data->img_banner) }}" alt="Carousel-Image"
                                             class="d-block w-100" />
                                     </div>
@@ -48,6 +39,9 @@
                 </div>
             </div>
         </section>
+    @endsection
+    @section('section2')
+        <br>
         <section class="store-trend-categories">
             <div class="container">
                 <div class="row">
@@ -57,15 +51,15 @@
                 </div>
                 <div class="row">
                     <!-- Responsive
-              col-6 = ukuran paling kecil
-              col-3 = sedang
-              col-2 = gede -->
+                              col-6 = ukuran paling kecil
+                              col-3 = sedang
+                              col-2 = gede -->
                     @forelse ($categorie as $item )
                         <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="200">
                             <a href="#" class="component-categories d-block">
                                 <div class="categories-image">
-                                    <img src="{{ url('storage/' . $item->image_categories) }}"
-                                        alt="categories-vegetarian" class="w-100" />
+                                    <img src="{{ url('storage/' . $item->image_categories) }}" alt="categories-vegetarian"
+                                        class="w-100" />
                                     <p class="categories-text">{{ $item->title }}</p>
                                 </div>
                             </a>
@@ -82,7 +76,8 @@
                 </div>
             </div>
         </section>
-
+    @endsection
+    @section('section3')
         <!-- Page New Product -->
         <section class="store-new-product">
             <div class="container">
@@ -92,102 +87,23 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-6 col-mb-4 col-lg-3" data-aos="fade-up" data-aos-delay="100">
-                        <a href="/details.html" class="component-products d-block">
-                            <div class="products-thumbnail">
-                                <div class="products-image" style="
-                      background-image: url('images/products-brocolli.jpg');
-                    "></div>
-                            </div>
-                            <div class="products-text">Brocolli</div>
-                            <div class="products-price">Rp.8.000</div>
-                        </a>
-                    </div>
-                    <div class="col-6 col-mb-4 col-lg-3" data-aos="fade-up" data-aos-delay="100">
-                        <a href="/details.html" class="component-products d-block">
-                            <div class="products-thumbnail">
-                                <div class="products-image" style="
-                      background-image: url('images/products-strawberry.jpg');
-                    "></div>
-                            </div>
-                            <div class="products-text">Strawberry</div>
-                            <div class="products-price">Rp.20.000</div>
-                        </a>
-                    </div>
-                    <div class="col-6 col-mb-4 col-lg-3" data-aos="fade-up" data-aos-delay="100">
-                        <a href="/details.html" class="component-products d-block">
-                            <div class="products-thumbnail">
-                                <div class="products-image" style="background-image: url('images/products-milk.jpg')">
+                    @forelse ($product as $data )
+                        <div class="col-6 col-mb-4 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+                            <a href="{{ route('detailProduct', $data->id) }}" class="component-products d-block">
+                                <div class="products-thumbnail">
+                                    <div class="products-image" style="
+                                      background-image: url('{{ url('storage/' . $data->thumbnail) }}');">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="products-text">Cow's Milk</div>
-                            <div class="products-price">Rp.14.000</div>
-                        </a>
-                    </div>
-                    <div class="col-6 col-mb-4 col-lg-3" data-aos="fade-up" data-aos-delay="100">
-                        <a href="/details.html" class="component-products d-block">
-                            <div class="products-thumbnail">
-                                <div class="products-image" style="background-image: url('images/products-eggs.jpg')">
-                                </div>
-                            </div>
-                            <div class="products-text">Egg</div>
-                            <div class="products-price">Rp.25.000</div>
-                        </a>
-                    </div>
-                    <div class="col-6 col-mb-4 col-lg-3" data-aos="fade-up" data-aos-delay="100">
-                        <a href="/details.html" class="component-products d-block">
-                            <div class="products-thumbnail">
-                                <div class="products-image" style="background-image: url('images/products-apple.jpg')">
-                                </div>
-                            </div>
-                            <div class="products-text">Apple</div>
-                            <div class="products-price">Rp.15.000</div>
-                        </a>
-                    </div>
-                    <div class="col-6 col-mb-4 col-lg-3" data-aos="fade-up" data-aos-delay="100">
-                        <a href="/details.html" class="component-products d-block">
-                            <div class="products-thumbnail">
-                                <div class="products-image" style="background-image: url('images/products-meat.jpg')">
-                                </div>
-                            </div>
-                            <div class="products-text">Beef</div>
-                            <div class="products-price">Rp.40.000</div>
-                        </a>
-                    </div>
-                    <div class="col-6 col-mb-4 col-lg-3" data-aos="fade-up" data-aos-delay="100">
-                        <a href="/details.html" class="component-products d-block">
-                            <div class="products-thumbnail">
-                                <div class="products-image"
-                                    style="background-image: url('images/products-spinach.jpg')"></div>
-                            </div>
-                            <div class="products-text">Spinach</div>
-                            <div class="products-price">Rp.5.000</div>
-                        </a>
-                    </div>
-                    <div class="col-6 col-mb-4 col-lg-3" data-aos="fade-up" data-aos-delay="100">
-                        <a href="/details.html" class="component-products d-block">
-                            <div class="products-thumbnail">
-                                <div class="products-image" style="background-image: url('images/products-kale.jpg')">
-                                </div>
-                            </div>
-                            <div class="products-text">Kangkung</div>
-                            <div class="products-price">Rp.8.000</div>
-                        </a>
-                    </div>
+                                <div class="products-text">{{ $data->name }}</div>
+                                <div class="products-price">Rp{{ $data->price }}</div>
+                            </a>
+                        </div>
+                    @empty
+
+                    @endforelse
                 </div>
             </div>
         </section>
-    </div>
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center">
-                    <p class="pt-4 pb-3">2021 Copyright Store. All Rights Reserved.</p>
-                </div>
-            </div>
-        </div>
-    </footer>
-    @include('user.__partials.footer')
-</body>
-
-</html>
+    @endsection
+</div>
