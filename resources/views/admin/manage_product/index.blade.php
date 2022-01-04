@@ -32,7 +32,7 @@
                         <td>{{ $data->name }}</td>
                         <td>{{ $data->price }}</td>
                         <td>{{ $data->desc }}</td>
-                        <td>{{ $data->categorie->name }}</td>
+                        <td>{{ $data->categorie->title }}</td>
                         <td>{{ $data->partner->name }}</td>
                         <td><img src="{{ url('storage/' . $data->thumbnail) }}" alt="" width="100" height="100">
                         </td>

@@ -49,6 +49,12 @@ class DashboardUser extends Controller
             return back()->with('dashboardFailed', $error);
         }
     }
+    /**
+     * save settings store
+     *
+     * @param Request $request
+     * @return void
+     */
     public function saveStoreSettings(Request $request)
     {
         $request->validate([
@@ -56,7 +62,6 @@ class DashboardUser extends Controller
             'name' => 'required',
             'category' => 'required'
         ]);
-
         try {
             /**
              * get data user for check completing account
@@ -81,7 +86,7 @@ class DashboardUser extends Controller
                 /**
                  * update partner
                  */
-                $partner = Partner::where('id_user',Auth::user()->id)->firstOrFail();
+                $partner = Partner::where('id_user', Auth::user()->id)->firstOrFail();
                 $partner->name = $request->name;
                 $partner->categories_partner = $request->category;
                 $partner->is_open = $request->is_store_open;

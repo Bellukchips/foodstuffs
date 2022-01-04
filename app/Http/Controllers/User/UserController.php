@@ -29,13 +29,6 @@ class UserController extends Controller
         return view('user.dashboard.index');
     }
     /**
-     * go to dashboard product page
-     */
-    public function goToProductDashboard()
-    {
-        return view('user.dashboard.product.index');
-    }
-    /**
      * go to transaction dashboard
      */
     public function goToTransactionDashboard()
@@ -65,20 +58,6 @@ class UserController extends Controller
     public function goToAccount()
     {
         return view('user.dashboard.account.index');
-    }
-    /**
-     * create new product
-     */
-    public function createNewProduct()
-    {
-        return view('user.dashboard.product.create');
-    }
-    /**
-     * show detail product in dashboard
-     */
-    public function showDetailProductDashboard()
-    {
-        return view('user.dashboard.product.edit');
     }
     /**
      * show detail transaction

@@ -11,11 +11,11 @@
              <a href="{{ route('goToDashboard') }}" class="list-group-item list-group-item-action">
                  Dashboard</a>
          @endif
-         @if (Route::is('goToProductDashboard'))
-             <a href="{{ route('goToProductDashboard') }}" class="list-group-item list-group-item-action active">
+         @if (Route::is('product.index'))
+             <a href="{{ route('product.index') }}" class="list-group-item list-group-item-action active">
                  My Product</a>
          @else
-             <a href="{{ route('goToProductDashboard') }}" class="list-group-item list-group-item-action">
+             <a href="{{ route('product.index') }}" class="list-group-item list-group-item-action">
                  My Product</a>
          @endif
          @if (Route::is('goToTransactionDashboard'))

@@ -11428,6 +11428,12 @@ footer p {
           box-shadow: 0px 4px 15px #f1f1f8;
   border-radius: 8px;
 }
+.card-dashboard-product .card-body img{
+  background-size: cover;
+  border-radius: 10px;
+  height: 150px;
+  width: 100%;
+}
 
 .card-dashboard-product .card-body .product-title {
   font-size: 18px;
