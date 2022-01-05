@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\FoodStuffs;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
@@ -17,7 +18,7 @@ class CartController extends Controller
     public function index()
     {
         $cart = Cart::join('users', 'carts.id_user', '=', 'users.id')->join('partners', 'users.id', '=', 'partners.id_user')->join('food_stuffs', 'carts.id_foodstuffs', '=', 'food_stuffs.id')
-            ->select('food_stuffs.name as name_product', 'food_stuffs.thumbnail as img_product', 'partners.name as store_name', 'carts.total as total_cart','carts.id as id_cart')->get();
+            ->select('food_stuffs.name as name_product', 'food_stuffs.thumbnail as img_product', 'partners.name as store_name', 'carts.total as total_cart', 'carts.id as id_cart')->where('carts.id_user', Auth::user()->id)->get();
         return view('user.product.cart.cart', compact('cart'));
     }
 
@@ -89,7 +90,7 @@ class CartController extends Controller
             $cart->delete();
             return back();
         } catch (\Exception $error) {
-            return back()->with('failedRequest',$error);
+            return back()->with('failedRequest', $error);
         }
     }
 }
